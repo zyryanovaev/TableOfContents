@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "jsx": "preserve",
+    "jsxImportSource": "@emotion/react",
+    "lib": ["dom", "es2017", "es2021.String"],
+    "typeRoots": ["./@types", "./node_modules/@types"],
+    "baseUrl": ".",
+    "moduleResolution": "node",
+    "strict": true,
+    "allowJs": true,
+    "noEmit": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "isolatedModules": true,
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": false,
+    "strictPropertyInitialization": true,
+    "incremental": true,
+    "useUnknownInCatchVariables": false,
+    "paths": {
+      "@styles/*": [
+        "src/client/styles/*"
+      ],
+      "@layouts/*": [
+        "src/client/layouts/*"
+      ]
+    }
+  },
+  "exclude": ["node_modules"],
+  "include": ["./next-env.d.ts", "**/*.ts", "**/*.tsx"]
+}
