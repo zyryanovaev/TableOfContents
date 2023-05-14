@@ -1,9 +1,13 @@
 import {AppProps} from 'next/app';
 import Head from 'next/head';
 import {Global} from '@emotion/react';
+import {QueryClient, QueryClientProvider} from 'react-query';
 
 import {AppLayout} from '@layouts/AppLayout';
 import globalCss from '@styles/index';
+import {AppContextProvider} from '@contexts/AppContext';
+
+const queryClient = new QueryClient();
 
 export default function App({Component, pageProps}: AppProps) {
     return (
@@ -16,9 +20,13 @@ export default function App({Component, pageProps}: AppProps) {
 
             <Global styles={globalCss} />
 
-            <AppLayout>
-                <Component {...pageProps} />
-            </AppLayout>
+            <QueryClientProvider client={queryClient}>
+                <AppContextProvider>
+                    <AppLayout>
+                        <Component {...pageProps} />
+                    </AppLayout>
+                </AppContextProvider>
+            </QueryClientProvider>
         </>
     );
 }

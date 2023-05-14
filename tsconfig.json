@@ -31,6 +31,18 @@
     "incremental": true,
     "useUnknownInCatchVariables": false,
     "paths": {
+      "@clientTypes/*": [
+        "src/client/types/*"
+      ],
+      "@components/*": [
+        "src/client/components/*"
+      ],
+      "@contexts/*": [
+        "src/client/contexts/*"
+      ],
+      "@hooks/*": [
+        "src/client/hooks/*"
+      ],
       "@styles/*": [
         "src/client/styles/*"
       ],

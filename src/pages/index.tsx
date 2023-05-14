@@ -1,13 +1,23 @@
-import Head from 'next/head';
+import {useContext} from 'react';
+import {useRouter} from 'next/router';
 
-export default function Page() {
-    return (
-        <>
-            <Head>
-                <title>Table of Content</title>
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-            </Head>
-            <main />
-        </>
-    );
+import {AppContext} from '@contexts/AppContext';
+import {Skeleton} from '@components/Skeleton';
+
+export default function Home() {
+    const {data, isLoading} = useContext(AppContext);
+    const router = useRouter();
+
+    if (isLoading) {
+        return <Skeleton width="500px" height="60px" />;
+    }
+
+    if (data && data.topLevelIds.length > 0) {
+        const firstPageId = data.topLevelIds[0];
+        const url = data.entities.pages[firstPageId].url;
+
+        router.replace(`/${url}`);
+    }
+
+    return null;
 }
