@@ -6,7 +6,7 @@ import {ExpandIcon} from '@components/icons/ExpandIcon';
 import {useOpened} from '@hooks/useOpened';
 
 import {SubTree} from '../SubTree';
-import {ExpandIconContainer, StyledListItem, StyledTreeNode, SubTreeContainer} from './styles';
+import {ExpandIconContainer, StyledListItem, StyledTreeNode} from './styles';
 
 interface TreeNodeProps {
     item: HelpTableOfContentPage;
@@ -27,7 +27,7 @@ export const TreeNode: FC<TreeNodeProps> = ({item, allPages}) => {
     return (
         <>
             <StyledListItem>
-                <Link scroll={false} href={url || '#'} passHref>
+                <Link scroll={false} href={url || '#'} passHref style={{textDecoration: 'none'}}>
                     <StyledTreeNode level={level}>
                         {hasChildren && (
                             <ExpandIconContainer onClick={handleIconClick} expanded={opened}>
@@ -39,11 +39,7 @@ export const TreeNode: FC<TreeNodeProps> = ({item, allPages}) => {
                 </Link>
             </StyledListItem>
 
-            {pages && (
-                <SubTreeContainer expanded={opened}>
-                    <SubTree pages={pages} allPages={allPages} />
-                </SubTreeContainer>
-            )}
+            {pages && opened && <SubTree pages={pages} allPages={allPages} />}
         </>
     );
 };

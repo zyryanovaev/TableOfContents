@@ -13,7 +13,7 @@ export const StyledRoot = styled.div`
 export const Header = styled.header`
     grid-area: header;
     height: 70px;
-    background-color: #303033;
+    background-color: var(--color-header);
 `;
 
 export const MainContent = styled.main`
