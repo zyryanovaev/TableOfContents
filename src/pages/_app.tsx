@@ -5,7 +5,7 @@ import {QueryClient, QueryClientProvider} from 'react-query';
 
 import {AppLayout} from '@layouts/AppLayout';
 import globalCss from '@styles/index';
-import {AppContextProvider} from '@contexts/AppContext';
+import {AppContextProvider} from '@contexts/AppContextProvider';
 
 const queryClient = new QueryClient();
 

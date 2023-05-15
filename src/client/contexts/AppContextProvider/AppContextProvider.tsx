@@ -3,8 +3,7 @@ import ky, {HTTPError} from 'ky';
 import {useQuery} from 'react-query';
 
 import {HelpTableOfContent} from '@clientTypes/help-table-of-content';
-
-import {AppContext} from './AppContext';
+import {AppContext} from '@contexts/AppContext';
 
 const HELP_TOC_DATA_QUERY_KEY = 'app-help-toc-query-key';
 
@@ -21,7 +20,7 @@ export const AppContextProvider: FC<{children: ReactNode}> = ({children}) => {
     );
 
     const pagesByUrls: Map<string, string> = useMemo(() => {
-        return Object.keys(data?.entities.pages || []).reduce((acc, currentValue) => {
+        return Object.keys(data?.entities.pages || {}).reduce((acc, currentValue) => {
             const url = data?.entities.pages[currentValue].url;
 
             if (url) {

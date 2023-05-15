@@ -49,7 +49,7 @@ export const TreeNode: FC<TreeNodeProps> = ({item, allPages, itemsState, openedI
         <>
             <StyledListItem>
                 {url ? (
-                    <Link scroll={false} href={url} style={{textDecoration: 'none'}}>
+                    <Link href={url} style={{textDecoration: 'none'}}>
                         <StyledTreeNode level={level} selected={selected} active={active} highlighted={highlighted}>
                             {hasChildren && (
                                 <ExpandIconContainer selected={selected} onClick={handleIconClick} expanded={isOpened}>
