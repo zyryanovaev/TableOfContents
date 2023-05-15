@@ -15,5 +15,7 @@ export const palette = css`
         --color-border: #d1d1d2;
 
         --color-header: #303033;
+
+        --color-hover: rgba(25, 25, 28, 0.05);
     }
 `;

@@ -1,31 +1,32 @@
 import styled from '@emotion/styled';
 
-interface StyledTreeNodeProps {
-    level: number;
-    selected: boolean;
-    highlighted: boolean;
-    active: boolean;
-}
-
-type ColoredTreeNodeProps = Omit<StyledTreeNodeProps, 'level'>;
-
 export const StyledListItem = styled.li`
     cursor: pointer;
     list-style-type: none;
 `;
 
-const ColoredTreeNode = styled.div<ColoredTreeNodeProps>`
+const ColoredTreeNode = styled.div<{active?: boolean; highlighted?: boolean; selected?: boolean}>`
     color: ${({selected}) => (selected ? 'var(--color-white)' : 'var(--color-black)')};
-    background-color: ${({selected, highlighted, active}) => {
-        if (selected) return 'var(--color-background-selected)';
-        if (highlighted) return 'var(--color-background-highlighted)';
-        if (active) return 'var(--color-background-highlighted-active)';
 
-        return 'var(--color-white)';
+    background-color: ${({active, highlighted, selected}) => {
+        if (selected) return 'var(--color-background-selected)';
+        if (active) return 'var(--color-background-highlighted-active)';
+        if (highlighted) return 'var(--color-background-highlighted)';
+
+        return 'inherit';
     }};
+
+    &:hover {
+        background-color: ${({selected}) => (selected ? 'var(--color-background-selected)' : ' var(--color-hover)')};
+    }
 `;
 
-export const StyledTreeNode = styled(ColoredTreeNode)<StyledTreeNodeProps>`
+export const StyledTreeNode = styled(ColoredTreeNode)<{
+    active?: boolean;
+    highlighted?: boolean;
+    selected?: boolean;
+    level: number;
+}>`
     padding: ${({level}) => `8px 0px 8px ${16 * (level + 1)}px`};
     overflow: hidden;
     text-overflow: ellipsis;
@@ -37,7 +38,7 @@ export const StyledTreeNode = styled(ColoredTreeNode)<StyledTreeNodeProps>`
     letter-spacing: 0.0045em;
 `;
 
-export const ExpandIconContainer = styled.span<{expanded: boolean; selected: boolean}>`
+export const ExpandIconContainer = styled.span<{expanded: boolean; selected?: boolean}>`
     transform: ${({expanded}) => (expanded ? 'rotate(90deg)' : undefined)};
     position: absolute;
     top: 10px;
@@ -46,4 +47,14 @@ export const ExpandIconContainer = styled.span<{expanded: boolean; selected: boo
     margin-left: -18px;
     transition: transform 0.2s;
     fill: ${({selected}) => (selected ? 'var(--color-white)' : 'var(--color-black)')};
+`;
+
+export const ColoredSubTree = styled.div<{active?: boolean; highlighted?: boolean}>`
+    background-color: ${({active, highlighted}) => {
+        if (active) return 'var(--color-background-highlighted-active)';
+        if (highlighted) return 'var(--color-background-highlighted)';
+
+        return 'inherit';
+    }}};
+
 `;

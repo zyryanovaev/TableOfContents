@@ -7,7 +7,7 @@ import {Skeleton} from '@components/Skeleton';
 import {SkeletonSideBar, StyledSideBar} from './styles';
 
 export const SideBar: FC = () => {
-    const {data, isLoading} = useContext(AppContext);
+    const {data, isLoading, pagesByUrls} = useContext(AppContext);
 
     if (isLoading) {
         return (
@@ -29,7 +29,7 @@ export const SideBar: FC = () => {
     if (data) {
         return (
             <StyledSideBar>
-                <TableOfContents pages={data.entities.pages} topLevelIds={data.topLevelIds} />
+                <TableOfContents pages={data.entities.pages} topLevelIds={data.topLevelIds} pagesByUrls={pagesByUrls} />
             </StyledSideBar>
         );
     }
