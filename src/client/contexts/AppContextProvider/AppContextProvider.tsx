@@ -7,7 +7,8 @@ import {AppContext} from '@contexts/AppContext';
 
 const HELP_TOC_DATA_QUERY_KEY = 'app-help-toc-query-key';
 
-const fetchHelpTOCData = async (): Promise<HelpTableOfContent> => ky.get('/api/help-toc').json<HelpTableOfContent>();
+const fetchHelpTOCData = async ({signal}): Promise<HelpTableOfContent> =>
+    ky.get('/api/help-toc', {signal}).json<HelpTableOfContent>();
 
 export const AppContextProvider: FC<{children: ReactNode}> = ({children}) => {
     const {data, isLoading} = useQuery<HelpTableOfContent, HTTPError, HelpTableOfContent>(

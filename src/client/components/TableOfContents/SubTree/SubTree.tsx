@@ -1,4 +1,4 @@
-import {Dispatch, FC, SetStateAction, useMemo} from 'react';
+import {Dispatch, FC, RefObject, SetStateAction, useMemo} from 'react';
 
 import {HelpTableOfContentPage} from '@clientTypes/help-table-of-content';
 
@@ -11,9 +11,10 @@ interface SubTreeProps {
     itemsState: TableOfContentsState;
     openedItems: Set<string>;
     setOpenedItems: Dispatch<SetStateAction<Set<string>>>;
+    scrollerRef: RefObject<HTMLLIElement>;
 }
 
-export const SubTree: FC<SubTreeProps> = ({pages, allPages, itemsState, openedItems, setOpenedItems}) => {
+export const SubTree: FC<SubTreeProps> = ({pages, allPages, itemsState, openedItems, setOpenedItems, scrollerRef}) => {
     const subPages = useMemo(() => {
         return pages.map(page => allPages[page]);
     }, [allPages, pages]);
@@ -22,6 +23,7 @@ export const SubTree: FC<SubTreeProps> = ({pages, allPages, itemsState, openedIt
         <>
             {subPages.map(item => (
                 <TreeNode
+                    scrollerRef={scrollerRef}
                     key={item.id}
                     item={item}
                     allPages={allPages}

@@ -1,9 +1,9 @@
-import {FC, useEffect, useMemo, useState} from 'react';
+import {createRef, FC, useEffect, useMemo, useState} from 'react';
 import {useRouter} from 'next/router';
 
 import type {HelpTableOfContentPage} from '@clientTypes/help-table-of-content';
 
-import {getTableOfContentsState, getPreOpenedItems} from './utils';
+import {getPreOpenedItems, getTableOfContentsState} from './utils';
 import {TreeNode} from './TreeNode';
 
 interface TableOfContentsProps {
@@ -18,6 +18,7 @@ export const TableOfContents: FC<TableOfContentsProps> = ({pages, topLevelIds, p
     const [openedItems, setOpenedItems] = useState<Set<string>>(new Set());
     const pathname = useRouter().asPath.substring(1);
     const currentPageId = pagesByUrls.get(pathname);
+    const scrollerRef = createRef<HTMLLIElement>();
 
     useEffect(() => {
         if (currentPageId) {
@@ -31,10 +32,17 @@ export const TableOfContents: FC<TableOfContentsProps> = ({pages, topLevelIds, p
         return currentPageId ? getTableOfContentsState(pages, currentPageId) : {};
     }, [currentPageId, pages]);
 
+    useEffect(() => {
+        if (currentPageId && scrollerRef.current) {
+            scrollerRef.current.scrollIntoView({behavior: 'smooth', block: 'center'});
+        }
+    }, [currentPageId, scrollerRef]);
+
     return (
         <>
             {topLevelIds.map(id => (
                 <TreeNode
+                    scrollerRef={scrollerRef}
                     openedItems={openedItems}
                     setOpenedItems={setOpenedItems}
                     key={id}

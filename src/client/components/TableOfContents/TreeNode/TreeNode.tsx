@@ -1,9 +1,9 @@
-import {Dispatch, FC, SetStateAction} from 'react';
-import Link from 'next/link';
+import {Dispatch, FC, RefObject, SetStateAction, useMemo} from 'react';
 
 import {HelpTableOfContentPage} from '@clientTypes/help-table-of-content';
 import {ExpandIcon} from '@components/icons/ExpandIcon';
 
+import {MenuItem} from './MenuItem';
 import {SubTree} from '../SubTree';
 import {ColoredSubTree, ExpandIconContainer, StyledListItem, StyledTreeNode} from './styles';
 import {TableOfContentsState} from '../types';
@@ -14,11 +14,12 @@ interface TreeNodeProps {
     itemsState: TableOfContentsState;
     openedItems: Set<string>;
     setOpenedItems: Dispatch<SetStateAction<Set<string>>>;
+    scrollerRef: RefObject<HTMLLIElement>;
 }
 
-export const TreeNode: FC<TreeNodeProps> = ({item, allPages, itemsState, openedItems, setOpenedItems}) => {
+export const TreeNode: FC<TreeNodeProps> = ({item, allPages, itemsState, openedItems, setOpenedItems, scrollerRef}) => {
     const {pages, level, title, url, id} = item;
-    const hasChildren = pages?.length > 0;
+    const hasChildren = pages && pages.length > 0;
 
     const selected = itemsState.selectedItemId === id;
     const active = itemsState.activeParentId === id;
@@ -45,53 +46,41 @@ export const TreeNode: FC<TreeNodeProps> = ({item, allPages, itemsState, openedI
         toggle();
     };
 
+    const ref = useMemo(() => {
+        return selected ? scrollerRef : undefined;
+    }, [selected]);
+
     return (
         <>
-            <StyledListItem>
-                {url ? (
-                    <Link href={url} style={{textDecoration: 'none'}}>
-                        <StyledTreeNode
-                            data-testid={`tree-node-${id}`}
-                            level={level}
-                            selected={selected}
-                            active={active}
-                            highlighted={highlighted}
-                        >
-                            {hasChildren && (
-                                <ExpandIconContainer
-                                    data-testid="tree-node-expanded-icon"
-                                    selected={selected}
-                                    onClick={handleIconClick}
-                                    expanded={isOpened}
-                                >
-                                    <ExpandIcon />
-                                </ExpandIconContainer>
-                            )}
-                            {title}
-                        </StyledTreeNode>
-                    </Link>
-                ) : (
+            <StyledListItem ref={ref}>
+                <MenuItem url={url}>
                     <StyledTreeNode
+                        data-testid={`tree-node-${id}`}
                         level={level}
                         selected={selected}
                         active={active}
                         highlighted={highlighted}
-                        onClick={toggle}
-                        data-testid={`tree-node-${id}`}
+                        onClick={url ? undefined : toggle}
                     >
                         {hasChildren && (
-                            <ExpandIconContainer selected={selected} expanded={isOpened}>
+                            <ExpandIconContainer
+                                data-testid="tree-node-expanded-icon"
+                                selected={selected}
+                                onClick={url ? handleIconClick : undefined}
+                                expanded={isOpened}
+                            >
                                 <ExpandIcon />
                             </ExpandIconContainer>
                         )}
                         {title}
                     </StyledTreeNode>
-                )}
+                </MenuItem>
             </StyledListItem>
 
             {pages && isOpened && (
                 <ColoredSubTree active={active} highlighted={highlighted} data-testid={`sub-tree-${id}`}>
                     <SubTree
+                        scrollerRef={scrollerRef}
                         pages={pages}
                         allPages={allPages}
                         itemsState={itemsState}
