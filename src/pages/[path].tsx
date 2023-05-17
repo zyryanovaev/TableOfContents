@@ -20,7 +20,7 @@ const Page: FC<PageProps> = ({pathname}) => {
     if (data && pathname && pagesByUrls.has(pathname)) {
         const pageId = pagesByUrls.get(pathname);
 
-        return <h1>{data.entities.pages[pageId].title}</h1>;
+        return <h1 data-testid="content-header">{data.entities.pages[pageId].title}</h1>;
     }
 
     return <NotFound />;

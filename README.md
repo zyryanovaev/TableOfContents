@@ -31,3 +31,10 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ```shell
 npm run lint
 ```
+
+### Run tests:
+
+```shell
+npx playwright install  
+npx playwright test   
+```

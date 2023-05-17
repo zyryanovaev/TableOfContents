@@ -50,9 +50,20 @@ export const TreeNode: FC<TreeNodeProps> = ({item, allPages, itemsState, openedI
             <StyledListItem>
                 {url ? (
                     <Link href={url} style={{textDecoration: 'none'}}>
-                        <StyledTreeNode level={level} selected={selected} active={active} highlighted={highlighted}>
+                        <StyledTreeNode
+                            data-testid={`tree-node-${id}`}
+                            level={level}
+                            selected={selected}
+                            active={active}
+                            highlighted={highlighted}
+                        >
                             {hasChildren && (
-                                <ExpandIconContainer selected={selected} onClick={handleIconClick} expanded={isOpened}>
+                                <ExpandIconContainer
+                                    data-testid="tree-node-expanded-icon"
+                                    selected={selected}
+                                    onClick={handleIconClick}
+                                    expanded={isOpened}
+                                >
                                     <ExpandIcon />
                                 </ExpandIconContainer>
                             )}
@@ -66,6 +77,7 @@ export const TreeNode: FC<TreeNodeProps> = ({item, allPages, itemsState, openedI
                         active={active}
                         highlighted={highlighted}
                         onClick={toggle}
+                        data-testid={`tree-node-${id}`}
                     >
                         {hasChildren && (
                             <ExpandIconContainer selected={selected} expanded={isOpened}>
@@ -78,7 +90,7 @@ export const TreeNode: FC<TreeNodeProps> = ({item, allPages, itemsState, openedI
             </StyledListItem>
 
             {pages && isOpened && (
-                <ColoredSubTree active={active} highlighted={highlighted}>
+                <ColoredSubTree active={active} highlighted={highlighted} data-testid={`sub-tree-${id}`}>
                     <SubTree
                         pages={pages}
                         allPages={allPages}

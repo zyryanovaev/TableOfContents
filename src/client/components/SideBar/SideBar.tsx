@@ -11,7 +11,7 @@ export const SideBar: FC = () => {
 
     if (isLoading) {
         return (
-            <SkeletonSideBar>
+            <SkeletonSideBar data-testid="loading-side-bar">
                 <Skeleton height="20px" />
                 <Skeleton height="20px" margin="0 32px 0 16px" />
                 <Skeleton height="20px" margin="0 0 0 16px" />
@@ -28,11 +28,11 @@ export const SideBar: FC = () => {
 
     if (data) {
         return (
-            <StyledSideBar>
+            <StyledSideBar data-testid="toc-side-bar">
                 <TableOfContents pages={data.entities.pages} topLevelIds={data.topLevelIds} pagesByUrls={pagesByUrls} />
             </StyledSideBar>
         );
     }
 
-    return <StyledSideBar />;
+    return <StyledSideBar data-testid="no-data-side-bar" />;
 };

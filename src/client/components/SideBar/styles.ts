@@ -6,6 +6,7 @@ export const StyledSideBar = styled.aside`
     width: 280px;
     background-color: var(--color-white);
     border-right: 1px solid var(--color-border);
+    overflow-y: scroll;
 `;
 
 export const SkeletonSideBar = styled(StyledSideBar)`

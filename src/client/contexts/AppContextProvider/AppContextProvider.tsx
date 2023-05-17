@@ -20,8 +20,8 @@ export const AppContextProvider: FC<{children: ReactNode}> = ({children}) => {
     );
 
     const pagesByUrls: Map<string, string> = useMemo(() => {
-        return Object.keys(data?.entities.pages || {}).reduce((acc, currentValue) => {
-            const url = data?.entities.pages[currentValue].url;
+        return Object.keys(data?.entities?.pages || {}).reduce((acc, currentValue) => {
+            const url = data?.entities?.pages[currentValue].url;
 
             if (url) {
                 acc.set(url, currentValue);
